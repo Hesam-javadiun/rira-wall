@@ -1,0 +1,42 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  /*
+    to understand where this came from read this:
+    https://www.smashingmagazine.com/2022/01/modern-fluid-typography-css-clamp/ 
+    you can use this tool calculate fluid typography
+    https://modern-fluid-typography.vercel.app/
+    */
+  font-size: clamp(1rem, 1vw + 0.63rem, 1.5rem);
+  font-family: "Quicksand", sans-serif;
+  --purple-color: #7d54fa;
+  --purple-color-deep: #5d4b81;
+  --black-color: #282c34;
+  --red-color: rgb(244, 96, 96);
+  --white-color: #ddd6cb;
+}
+
+body {
+  background: linear-gradient(
+    90deg,
+    var(--purple-color),
+    var(--purple-color-deep)
+  );
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: stretch;
+  padding: 1.5rem;
+}
+
+#root{
+    flex-grow: 1;
+}
