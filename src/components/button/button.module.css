@@ -1,0 +1,11 @@
+.button {
+    outline : none;
+    border : none;
+    text-decoration: none;
+    color: var(--white-color);
+    background: var(--gradient);
+    padding: .25rem .5rem;
+    font-size: 1rem;
+    border-radius: 50%;
+}
+

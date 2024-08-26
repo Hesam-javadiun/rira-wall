@@ -7,8 +7,8 @@
 }
 
 .sideBar {
-  /* width: 2rem; */
   border-right: 1px dotted var(--white-color);
+  padding: .5rem;
 }
 
 .grid {

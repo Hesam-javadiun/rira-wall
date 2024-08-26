@@ -20,14 +20,16 @@
   --black-color: #282c34;
   --red-color: rgb(244, 96, 96);
   --white-color: #ddd6cb;
-}
 
-body {
-  background: linear-gradient(
+  --gradient: linear-gradient(
     90deg,
     var(--purple-color),
     var(--purple-color-deep)
   );
+}
+
+body {
+  background: var(--gradient);
 
   width: 100vw;
   height: 100vh;
