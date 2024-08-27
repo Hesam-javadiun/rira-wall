@@ -6,10 +6,10 @@ const Layout = function () {
   return (
     <>
       <Container tag="section" className={classes.container}>
-        <Container tag="section" className={classes.sideBar}>
+        <div className={classes.sideBar}>
           <Button>click</Button>
-        </Container>
-        <Container tag="main" className={classes.grid}></Container>
+        </div>
+        <main className={classes.grid}></main>
       </Container>
     </>
   );

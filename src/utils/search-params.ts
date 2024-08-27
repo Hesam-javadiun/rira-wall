@@ -8,30 +8,30 @@ class SearchParamsUtils {
     return new URLSearchParams(url.search);
   }
 
-  private doesNotSlugExist(searchParam: URLSearchParams) {
-    return !searchParam.get("slug")
+  private doesSlugExist(searchParam: URLSearchParams) {
+    return searchParam.get("slug")
   }
 
   addSearchParamToBrowser(urlString: string): void | never {
     const searchParam = this.getSearchParamObj(urlString);
 
-    if (this.doesNotSlugExist(searchParam)) {
+    if (!this.doesSlugExist(searchParam)) {
       throw Error("there is not slug in href");
     }
 
     history.pushState(null, "", "?" + searchParam.toString());
   }
 
-  getSlugFromSearchParam(): number | never {
+  getSlugFromSearchParam(): number | never | null {
     const searchParam = this.getSearchParamObj(location.href);
     const slug = searchParam.get("slug")!;
-
+    
     if (!slug) {
-      throw Error("slug is not exist");
+      return null
     }
 
     if (slug && !this.isNumber(slug)) {
-      throw Error("slug is not number or not exist ");
+      throw Error("slug is not number");
     }
 
     return +slug;
