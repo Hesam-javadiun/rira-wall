@@ -1,31 +1,33 @@
-import { StickyNotesType } from "@/App";
-
 
 class FormValidation {
-  isValidTitle(title: string) {
-    return title !== "";
+  //validation actions
+  private isEmpty = (input: string) => {
+    return input=== ''
   }
 
-  isValidDescription(description: string) {
-    return description !== "";
+  isValidTitle(title: string, errors: string[]) {
+    if (this.isEmpty(title)) {
+      errors.push("title is empty");
+    }
   }
 
-  isCreationDateValid() {
-    return true;
+  isValidDescription(description: string, errors: string[]) {
+    if (this.isEmpty(description)) {
+      errors.push("description is empty");
+    }
   }
 
-  isValidDeadline() {
-    return true;
+  isCreationDateValid(creationDate: string, errors: string[]) {
+    if (creationDate !== "") {
+      errors.push("creationDate is empty");
+    }
   }
 
-//   validateState(args: Partial<StickyNotesType>): ValidityState {
-    
-//     return {
-//       isValidTitle: this.isValidTitle(title),
-//       isValidDescription: this.isValidDescription(description),
-//       isValidDeadline: this.isValidDeadline(deadline),
-//     };
-//   }
+  isValidDeadline(deadline: string, errors: string[]) {
+    if (deadline !== "") {
+      errors.push("deadline is empty");
+    }
+  }
 }
 
 export default FormValidation;

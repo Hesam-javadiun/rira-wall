@@ -1,84 +1,86 @@
-import {
-  type ReactNode,
-  type ComponentPropsWithoutRef,
-  type FormEvent,
-  useState,
-  useReducer,
-  useMemo,
-} from "react";
+import { type ComponentPropsWithoutRef, type FormEvent } from "react";
 import { StickyNotesType } from "@/App";
 import Button from "../button";
-import { searchParamsUtils } from "@/utils";
+import Input from "@/components/input";
+import useSelectedNote from "./use-selected-note";
+import useWallForm from "./use-wall-form";
+import classes from './form.module.css';
 
 type FormProps = ComponentPropsWithoutRef<"form"> & {
   onSave: (data: StickyNotesType) => void;
+  onClose:() => void; 
   listOfNotes: StickyNotesType[];
 };
 
-type FormState = StickyNotesType & {
-  isValidTitle: boolean;
-  isValidDescription: boolean;
-  isCreationValid: boolean;
-  isValidDeadline: boolean;
-};
-function generateState(stickyNote: StickyNotesType | null) {
-  return {
-    title: stickyNote?.title ?? "",
-    description: stickyNote?.description ?? "",
-    creationDate: stickyNote?.creationDate ?? "",
-    deadline: stickyNote?.deadline ?? "",
-    isValidTitle: true,
-    isValidDescription: true,
-    isCreationValid: true,
-    isValidDeadline: true,
-  };
-}
-const initialState: FormState = {
-  isValidTitle: true,
-  isValidDescription: true,
-  isCreationValid: true,
-  isValidDeadline: true,
-};
-
-type TitleAndDescriptionActionType = {
-  type: "TITLE" | "DESCRIPTION";
-  payload: string;
-};
-
-type DateActionType = {
-  type: "CREATION_DATE" | "DEADLINE";
-  payload: string;
-};
-
-const reducer = (state, action) => {};
-
 const Form = function (props: FormProps) {
-  const { onSave, listOfNotes, ...formProps } = props;
-  const [disable, setDisable] = useState(false);
+  const { onSave, onClose, listOfNotes, ...formProps } = props;
+  const { selectedStickyNote } = useSelectedNote(listOfNotes);
 
-  const slug = searchParamsUtils.getSlugFromSearchParam();
-
-  const selectedStickyNote = useMemo<StickyNotesType | null>(() => {
-    return listOfNotes.find((_, index) => index === slug) ?? null
-  }, [slug]);
-
-  const [formState, dispatch] = useReducer(
-    reducer,
-    selectedStickyNote,
-    generateState
-  );
+  const {
+    description,
+    descriptionErrorMsges,
+    descriptionIsTouched,
+    descriptionChangeHandler,
+    title,
+    titleErrorMsges,
+    titleIsTouched,
+    titleChangeHandler,
+    formDataIsValid,
+    setInputsTouched,
+    resetForm,
+  } = useWallForm(selectedStickyNote);
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-    const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData);
+    event.preventDefault();
+    // const formData = new FormData(event.currentTarget);
+    // const data = Object.fromEntries(formData);
+    console.log('=> ', !formDataIsValid, !descriptionIsTouched , !titleIsTouched);
+    if(!formDataIsValid ){
+      if(!descriptionIsTouched || !titleIsTouched ){
+        setInputsTouched()
+      }
+      return
+    }
+    console.log('submit fired with ', title, description);
+    // onSave({title, description, });
+    resetForm();
+  };
 
-    onSave(data);
+  const cancelHandler = () => {
+    resetForm();
+    onClose();
   };
 
   return (
-    <form {...formProps} onSubmit={submitHandler}>
-      <Button type="submit" disabled={disable}>
+    <form {...formProps} onSubmit={submitHandler} className={classes.form}>
+      <Input
+        id={"title"}
+        label={"Title"}
+        value={title}
+        // required
+        errors={titleErrorMsges}
+        onChange={titleChangeHandler}
+        className={classes.input}
+        isTouched={titleIsTouched}
+      ></Input>
+      <Input
+        id={"description"}
+        type={'text'}
+        // required
+        label={"Description"}
+        value={description}
+        errors={descriptionErrorMsges}
+        onChange={descriptionChangeHandler}
+        className={classes.input}
+        isTouched={descriptionIsTouched}
+      ></Input>
+      {/* <Input id={"creationDate"} label={"CreationDate"}></Input>
+      <Input id={"deadline"} label={"Deadline"}></Input> */}
+      <Button type="submit" className={classes.submitBtn}>
         Submit
+      </Button>
+      <Button className={classes.submitBtn} onClick={cancelHandler}>
+        Cancel
       </Button>
     </form>
   );

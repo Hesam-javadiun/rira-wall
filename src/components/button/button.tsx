@@ -14,13 +14,13 @@ type ButtonProps = AnchorElementProps | ButtonElementProps;
 function isAnchor(props: ButtonProps): props is AnchorElementProps {
   return "href" in props;
 }
-
 const Button = function (props: ButtonProps) {
+  const className = props.className ?? classes.color
   if (isAnchor(props)) {
-    return <a {...props} className={`${classes.button} ${props.className}`}></a>;
+    return <a {...props} className={`${classes.button} ${className}`}></a>;
   }
 
-  return <button {...props} className={`${classes.button} ${props.className}`}></button>;
+  return <button {...props} className={`${classes.button} ${className}`}></button>;
 };
 
 export default Button;

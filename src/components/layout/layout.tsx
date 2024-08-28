@@ -1,15 +1,22 @@
 import classes from "./layout.module.css";
-import Button from "@/components/button";
 import Container from "@/components/container";
+import { type ReactNode } from "react";
 
-const Layout = function () {
+type LayoutProps = {
+  children: ReactNode;
+  openModalButton: ReactNode
+}
+
+const Layout = function ({openModalButton, children}: LayoutProps) {
   return (
     <>
       <Container tag="section" className={classes.container}>
         <div className={classes.sideBar}>
-          <Button>click</Button>
+          {openModalButton}
         </div>
-        <main className={classes.grid}></main>
+        <main className={classes.grid}>
+          {children}
+        </main>
       </Container>
     </>
   );

@@ -1,5 +1,8 @@
+import { useRef } from "react";
 import Layout from "@/components/layout";
-
+import Modal, { type ModalExposedRef } from "@/components/modal";
+import Form from "@/components/form";
+import Button from "@/components/button";
 export type StickyNotesType = {
   title: string;
   description: string;
@@ -8,12 +11,27 @@ export type StickyNotesType = {
 };
 
 function App() {
-  return (
+  const modalRef = useRef<ModalExposedRef>(null);
+  const onSave = (data: StickyNotesType) => {};
+
+  const onClose = () => {
+    const modal = modalRef.current!;
+    modal.close();
+  }
+
+  const onClickHandler = () => {
+    const modal = modalRef.current!;
+    modal.show();
+  } 
+
+  return (  
     <>
-      <Layout></Layout>;
-      {/* <Modal>
-        <Form></Form>
-      </Modal> */}
+      <Layout openModalButton={<Button onClick={onClickHandler}>plus icon</Button>}>
+        <h1>sticky notes</h1>     
+      </Layout>
+      <Modal ref={modalRef}>
+        <Form onSave={onSave} listOfNotes={[]} onClose={onClose}></Form>
+      </Modal>
     </>
   );
 }

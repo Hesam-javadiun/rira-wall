@@ -1,38 +1,10 @@
-/* .backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.5;
-
-  z-index: 1;
-}
-
 .modal {
   position: absolute;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(100%, 10rem);
-  background: var(--gradient);
-  border-radius: .5rem;
-  height: 10rem;
-  z-index: 2;
-} */
-
-.modal {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(100%, 10rem);
   background: var(--gradient);
   border-radius: 0.5rem;
-  height: 10rem;
   z-index: 2;
   border: none;
 }

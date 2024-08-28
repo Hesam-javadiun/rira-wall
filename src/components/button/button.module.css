@@ -1,11 +1,18 @@
 .button {
-    outline : none;
-    border : none;
-    text-decoration: none;
-    color: var(--white-color);
-    background: var(--gradient);
-    padding: .25rem .5rem;
-    font-size: 1rem;
-    border-radius: 50%;
+  outline: none;
+  border: none;
+  text-decoration: none;
+
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.2rem;
 }
 
+.color {
+  color: var(--white-color);
+  background: var(--gradient);
+}
+
+.input {
+    flex-basis: 0;
+}
