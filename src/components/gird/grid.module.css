@@ -1,11 +1,19 @@
 .girdContainer{
-    background-color: gray;
+    /* background-color: gray; */
     list-style-type: none;
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    padding: 2rem;
+    gap: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-rows: min-content;
 }
 
 .gridItem {
-    font-size: 2rem;
+    /* background-color: darkslategray; */
+    /* padding: 2rem; */
+    margin: 0;
+    height: auto;
 }

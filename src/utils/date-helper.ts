@@ -21,4 +21,8 @@ export default class DateHelper {
 
     return `${years}-${month}-${day}`;
   }
+
+  customizeDateStringForShowing(date: Date){
+    return date.toDateString();
+  }
 }

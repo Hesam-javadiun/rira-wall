@@ -20,7 +20,7 @@
   --black-color: #282c34;
   --red-color: rgb(244, 96, 96);
   --white-color: #ddd6cb;
-
+  --green-color: #78ebb6;
   --gradient: linear-gradient(
     90deg,
     var(--purple-color),
