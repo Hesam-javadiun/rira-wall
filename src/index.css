@@ -27,6 +27,7 @@
     var(--purple-color-deep)
   );
 
+  --shadow: 0 0 0.5rem #171717;
 
 }
 
@@ -43,4 +44,9 @@ body {
 
 #root{
     flex-grow: 1;
+}
+
+h1 {
+  color: var(--white-color);
+  margin: 0.5rem;
 }

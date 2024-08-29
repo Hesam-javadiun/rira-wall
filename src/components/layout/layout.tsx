@@ -11,10 +11,10 @@ const Layout = function ({openModalButton, children}: LayoutProps) {
   return (
     <>
       <Container tag="section" className={classes.container}>
-        <div className={classes.sideBar}>
+        <div className={classes.leftBar}>
           {openModalButton}
         </div>
-        <main className={classes.grid}>
+        <main className={classes.mainContent}>
           {children}
         </main>
       </Container>

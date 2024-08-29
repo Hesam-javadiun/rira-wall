@@ -2,20 +2,25 @@ import { type ComponentPropsWithoutRef, type FormEvent } from "react";
 import { StickyNotesType } from "@/App";
 import Button from "../button";
 import Input from "@/components/input";
-import useSelectedNote from "./use-selected-note";
+import useSubmit from "./use-submit";
 import useWallForm from "./use-wall-form";
 import classes from "./form.module.css";
 import { dateHelper } from "@/utils";
 
 type FormProps = ComponentPropsWithoutRef<"form"> & {
-  onSave: (data: StickyNotesType) => void;
+  addNote: (note: StickyNotesType) => void;
+  editNote: (slug: number, note: StickyNotesType) => void;
   onClose: () => void;
   listOfNotes: StickyNotesType[];
 };
 
 const Form = function (props: FormProps) {
-  const { onSave, onClose, listOfNotes, ...formProps } = props;
-  const { selectedStickyNote } = useSelectedNote(listOfNotes);
+  const { addNote, editNote, onClose, listOfNotes, ...formProps } = props;
+  const { selectedStickyNote, onSubmit } = useSubmit(
+    listOfNotes,
+    addNote,
+    editNote
+  );
 
   const {
     description,
@@ -58,7 +63,15 @@ const Form = function (props: FormProps) {
     if (!(creationDate !== null && deadline !== null)) {
       throw Error("creationDate or deadline is null");
     }
-    onSave({ title, description, creationDate, deadline });
+
+    onSubmit({ title, description, creationDate, deadline });
+    console.log("form submitted with data => ", {
+      title,
+      description,
+      creationDate,
+      deadline,
+    });
+
     resetForm();
   };
 

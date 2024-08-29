@@ -3,6 +3,9 @@ import Layout from "@/components/layout";
 import Modal, { type ModalExposedRef } from "@/components/modal";
 import Form from "@/components/form";
 import Button from "@/components/button";
+import useNotes from "@/hooks/use-notes";
+import Grid from "@/components/gird";
+import { PlusIcon } from "@/components/icons";
 
 export type StickyNotesType = {
   title: string;
@@ -12,11 +15,9 @@ export type StickyNotesType = {
 };
 
 function App() {
-  const modalRef = useRef<ModalExposedRef>(null);
+  const { notes, addNote, removeNote, editNote } = useNotes();
 
-  const onSave = (data: StickyNotesType) => {
-    console.log("form submitted with data => ", data);
-  };
+  const modalRef = useRef<ModalExposedRef>(null);
 
   const onClose = () => {
     const modal = modalRef.current!;
@@ -28,15 +29,25 @@ function App() {
     modal.show();
   };
 
+  const button = (
+    <Button onClick={onClickHandler}>
+      <PlusIcon />
+    </Button>
+  );
+
   return (
     <>
-      <Layout
-        openModalButton={<Button onClick={onClickHandler}>plus icon</Button>}
-      >
-        <h1>sticky notes</h1>
+      <Layout openModalButton={button}>
+        <h1>Wall of Sticky Notes</h1>
+        <Grid />
       </Layout>
       <Modal ref={modalRef}>
-        <Form onSave={onSave} listOfNotes={[]} onClose={onClose}></Form>
+        <Form
+          listOfNotes={notes}
+          onClose={onClose}
+          addNote={addNote}
+          editNote={editNote}
+        ></Form>
       </Modal>
     </>
   );

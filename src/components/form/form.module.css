@@ -1,27 +1,24 @@
 .form {
-    padding: 1rem ;
-    width: 25rem;
-    max-width: 100%;
-    min-height: 15rem;  
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: .5rem;
-    font-size: 1.1em;
-    height: 30rem;
+  padding: 1rem;
+  width: 25rem;
+  max-width: 100%;
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 1.1em;
+  height: 30rem;
 }
 
-.submitBtn{
-    background-color: var(--black-color);
-    color: var(--white-color)
+.submitBtn {
+  background-color: var(--black-color);
+  color: var(--white-color);
 }
 
 .dateContainer {
-    flex-basis: 0;
-    flex-grow: 1;
-    display: flex;
-    gap: 1rem;
+  flex-basis: 0;
+  flex-grow: 1;
+  display: flex;
+  gap: 1rem;
 }
-
-
-
