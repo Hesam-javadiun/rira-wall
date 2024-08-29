@@ -4,11 +4,12 @@ import Button from "../button";
 import Input from "@/components/input";
 import useSelectedNote from "./use-selected-note";
 import useWallForm from "./use-wall-form";
-import classes from './form.module.css';
+import classes from "./form.module.css";
+import { dateHelper } from "@/utils";
 
 type FormProps = ComponentPropsWithoutRef<"form"> & {
   onSave: (data: StickyNotesType) => void;
-  onClose:() => void; 
+  onClose: () => void;
   listOfNotes: StickyNotesType[];
 };
 
@@ -25,6 +26,15 @@ const Form = function (props: FormProps) {
     titleErrorMsges,
     titleIsTouched,
     titleChangeHandler,
+    creationDate,
+    isCreationDateTouched,
+    creationInputErrors,
+    creationDateChangeHandler,
+    deadline,
+    isDeadlineTouched,
+    deadlineInputErrors,
+    minDeadlineValue,
+    deadlineChangeHandler,
     formDataIsValid,
     setInputsTouched,
     resetForm,
@@ -32,17 +42,23 @@ const Form = function (props: FormProps) {
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const formData = new FormData(event.currentTarget);
-    // const data = Object.fromEntries(formData);
-    console.log('=> ', !formDataIsValid, !descriptionIsTouched , !titleIsTouched);
-    if(!formDataIsValid ){
-      if(!descriptionIsTouched || !titleIsTouched ){
-        setInputsTouched()
+
+    if (!formDataIsValid) {
+      if (
+        !descriptionIsTouched ||
+        !titleIsTouched ||
+        !isDeadlineTouched ||
+        !isCreationDateTouched
+      ) {
+        setInputsTouched();
       }
-      return
+      return;
     }
-    console.log('submit fired with ', title, description);
-    // onSave({title, description, });
+
+    if (!(creationDate !== null && deadline !== null)) {
+      throw Error("creationDate or deadline is null");
+    }
+    onSave({ title, description, creationDate, deadline });
     resetForm();
   };
 
@@ -65,7 +81,7 @@ const Form = function (props: FormProps) {
       ></Input>
       <Input
         id={"description"}
-        type={'text'}
+        type={"text"}
         // required
         label={"Description"}
         value={description}
@@ -74,8 +90,31 @@ const Form = function (props: FormProps) {
         className={classes.input}
         isTouched={descriptionIsTouched}
       ></Input>
-      {/* <Input id={"creationDate"} label={"CreationDate"}></Input>
-      <Input id={"deadline"} label={"Deadline"}></Input> */}
+      <div className={classes.dateContainer}>
+        <Input
+          id={"creation_date"}
+          type={"date"}
+          // required
+          label={"Date of registration"}
+          value={dateHelper.convertDateToInputValue(creationDate)}
+          errors={creationInputErrors}
+          onChange={creationDateChangeHandler}
+          className={classes.input}
+          isTouched={isCreationDateTouched}
+        ></Input>
+        <Input
+          id={"deadline"}
+          type={"date"}
+          // required
+          label={"Deadline Date"}
+          value={dateHelper.convertDateToInputValue(deadline)}
+          errors={deadlineInputErrors}
+          onChange={deadlineChangeHandler}
+          className={classes.input}
+          isTouched={isDeadlineTouched}
+          min={dateHelper.convertDateToInputValue(minDeadlineValue)}
+        ></Input>
+      </div>
       <Button type="submit" className={classes.submitBtn}>
         Submit
       </Button>

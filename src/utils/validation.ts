@@ -1,9 +1,8 @@
-
 class FormValidation {
   //validation actions
   private isEmpty = (input: string) => {
-    return input=== ''
-  }
+    return input === "";
+  };
 
   isValidTitle(title: string, errors: string[]) {
     if (this.isEmpty(title)) {
@@ -17,15 +16,24 @@ class FormValidation {
     }
   }
 
-  isCreationDateValid(creationDate: string, errors: string[]) {
-    if (creationDate !== "") {
-      errors.push("creationDate is empty");
+  isCreationDateValid(creationDate: Date | null, errors: string[]) {
+    if (!creationDate) {
+      errors.push("creation date is empty");
     }
   }
 
-  isValidDeadline(deadline: string, errors: string[]) {
-    if (deadline !== "") {
+  isValidDeadline(creationDate: Date | null, deadline: Date | null, errors: string[]) {
+    if (!deadline) {
       errors.push("deadline is empty");
+      return;
+    }
+
+    if(!creationDate){
+      return;
+    }
+
+    if(creationDate > deadline ){
+      errors.push("deadline must come before the creationDate");
     }
   }
 }
