@@ -6,7 +6,7 @@ import Button from "@/components/button";
 import useNotes from "@/hooks/use-notes";
 import { GridContainer, GridItem } from "@/components/gird";
 import { PlusIcon } from "@/components/icons";
-import StickyNoteCard from "./components/sticky-note-card/sticky-node-card";
+import StickyNoteCard from "./components/sticky-note-card/sticky-note-card";
 import { searchParamsUtils } from "./utils";
 import { type DragEvent } from "react";
 
@@ -49,9 +49,8 @@ function App() {
       <GridContainer>
         {notes.map((note: StickyNotesType, index: number) => {
           return (
-            <GridItem>
+            <GridItem key={note.creationDate.toDateString() + note.title}>
               <StickyNoteCard
-                key={note.creationDate.toDateString() + note.title}
                 removeHandler={removeNote.bind(null, index)}
                 editHandler={editNoteButtonHandler.bind(null, index)}
                 note={note}
