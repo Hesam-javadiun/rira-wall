@@ -1,4 +1,4 @@
-.girdContainer{
+.gridContainer{
     /* background-color: gray; */
     list-style-type: none;
     width: 100%;
@@ -9,11 +9,4 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     grid-template-rows: min-content;
-}
-
-.gridItem {
-    /* background-color: darkslategray; */
-    /* padding: 2rem; */
-    margin: 0;
-    height: auto;
 }

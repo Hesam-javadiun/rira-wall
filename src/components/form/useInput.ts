@@ -32,12 +32,13 @@ type InputState = {
   errors: string[];
   isTouched: boolean;
 };
-const initialState = {
-  value: "",
+
+const generateState = (initialValue: string): InputState => ({
+  value: initialValue,
   isValid: false,
   errors: [],
   isTouched: false,
-};
+});
 
 const reducer = (pervState: InputState, action: ActionTypes) => {
   switch (action.type) {
@@ -51,7 +52,7 @@ const reducer = (pervState: InputState, action: ActionTypes) => {
       return { ...pervState, isTouched: true };
     }
     case "RESET": {
-      return { ...initialState };
+      return generateState("");
     }
     case "ERROR": {
       return {
@@ -64,11 +65,12 @@ const reducer = (pervState: InputState, action: ActionTypes) => {
 };
 
 type UseInput = {
+  initialValue: string, 
   validationAction: (value: string, errors: string[]) => void;
 };
 
-function useInput({ validationAction }: UseInput) {
-  const [inputState, dispatch] = useReducer(reducer, initialState);
+function useInput({ validationAction, initialValue }: UseInput) {
+  const [inputState, dispatch] = useReducer(reducer,initialValue,  generateState);
   const isFirstUpdate = useRef(true);
   const hasBeenReset = useRef(false);
   const { value, isValid, errors, isTouched } = inputState;

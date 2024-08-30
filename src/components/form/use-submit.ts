@@ -1,6 +1,10 @@
 import { searchParamsUtils } from "@/utils";
 import { type StickyNotesType } from "@/App";
 
+function isNumber(number: unknown) {
+  return !isNaN(number as number) && typeof number === 'number'
+}
+
 function useSubmit(
   listOfNotes: StickyNotesType[],
   addNote: (note: StickyNotesType) => void,
@@ -9,13 +13,11 @@ function useSubmit(
 
   const slug = searchParamsUtils.getSlugFromSearchParam();
 
-  console.log(slug);
   let selectedStickyNote = null;
   let onSubmit = addNote;
-
-  if(slug){
+  if(isNumber(slug)){
     selectedStickyNote = listOfNotes.find((_, index) => index === slug) ?? null;
-    onSubmit = editNote.bind(null, slug)
+    onSubmit = editNote.bind(null, slug as number)
   }
 
   // const selectedStickyNote = useMemo<StickyNotesType | null>(() => {

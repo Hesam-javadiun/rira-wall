@@ -16,6 +16,7 @@ type FormProps = ComponentPropsWithoutRef<"form"> & {
 
 const Form = function (props: FormProps) {
   const { addNote, editNote, onClose, listOfNotes, ...formProps } = props;
+  
   const { selectedStickyNote, onSubmit } = useSubmit(
     listOfNotes,
     addNote,
@@ -71,7 +72,7 @@ const Form = function (props: FormProps) {
       creationDate,
       deadline,
     });
-
+    onClose();
     resetForm();
   };
 

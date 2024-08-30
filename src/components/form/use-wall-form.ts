@@ -26,10 +26,12 @@ function useWallForm(selectedStickyNote: StickyNotesType | null) {
   } = useDates(selectedStickyNote);
 
   const titleInput = useInput({
+    initialValue: selectedStickyNote?.title ?? '',
     validationAction: validation.isValidTitle.bind(validation),
   });
 
   const descriptionInput = useInput({
+    initialValue: selectedStickyNote?.description ?? '',
     validationAction: validation.isValidDescription.bind(validation),
   });
 

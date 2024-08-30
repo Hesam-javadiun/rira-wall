@@ -9,32 +9,36 @@ class SearchParamsUtils {
   }
 
   private doesSlugExist(searchParam: URLSearchParams) {
-    return searchParam.get("slug")
+    return searchParam.get("slug");
   }
 
-  addSearchParamToBrowser(urlString: string): void | never {
-    const searchParam = this.getSearchParamObj(urlString);
+  addSearchParamToBrowserURL(slug?: number): void | never {
+    const searchParam = this.getSearchParamObj(location.href);
 
-    if (!this.doesSlugExist(searchParam)) {
-      throw Error("there is not slug in href");
+    if (this.doesSlugExist(searchParam)) {
+      return 
     }
 
-    history.pushState(null, "", "?" + searchParam.toString());
+    searchParam.set("slug", "" + (slug ?? null));
+    history.replaceState(null, "", "?" + searchParam.toString());
   }
 
   getSlugFromSearchParam(): number | never | null {
     const searchParam = this.getSearchParamObj(location.href);
     const slug = searchParam.get("slug")!;
-    
-    if (!slug) {
-      return null
+    if (slug === 'null') {
+      return null;
     }
-
+    
     if (slug && !this.isNumber(slug)) {
       throw Error("slug is not number");
     }
 
     return +slug;
+  }
+
+  navigateBack(){
+    history.replaceState(null, "", './');
   }
 }
 
