@@ -1,56 +1,55 @@
 import { StickyNotesType } from "@/App";
 import { validation } from "@/utils";
-import useDates from "./useDates";
 import useInput from "./useInput";
+import { useCallback } from "react";
 
-//TODO need to refactored 
-  // add useDates hook functionality to useInput
-  // pull out side effects common code
-  // pull our first render and last render side effect to into seperate useEffect
-    
+//TODO need to refactored
+// deadline date picker ye roz aghab pick mikone vali creation date dorost pick mikone ????
+
 function useWallForm(selectedStickyNote: StickyNotesType | null) {
-  const {
-    creationDate,
-    isCreationDateTouched,
-    isCreationDateValid,
-    creationInputErrors,
-    creationDateChangeHandler,
-    deadline,
-    isDeadlineTouched,
-    isDeadlineValid,
-    deadlineInputErrors,
-    minDeadlineValue,
-    deadlineChangeHandler,
-    setDatesTouched,
-    reset: resetDates,
-  } = useDates(selectedStickyNote);
-
   const titleInput = useInput({
-    initialValue: selectedStickyNote?.title ?? '',
+    type: "text",
+    initialValue: selectedStickyNote?.title ?? "",
     validationAction: validation.isValidTitle.bind(validation),
   });
 
   const descriptionInput = useInput({
-    initialValue: selectedStickyNote?.description ?? '',
+    type: "text",
+    initialValue: selectedStickyNote?.description ?? "",
     validationAction: validation.isValidDescription.bind(validation),
+  });
+
+  const creationDateInput = useInput({
+    type: "date",
+    initialValue: selectedStickyNote?.creationDate ?? null,
+    validationAction: validation.isCreationDateValid.bind(validation),
+  });
+
+  const deadlineValidation = useCallback(
+    validation.isValidDeadline
+      .bind(validation)
+      .bind(null, creationDateInput.value),
+    [creationDateInput.value]
+  );
+
+  const deadlineInput = useInput({
+    type: "date",
+    initialValue: selectedStickyNote?.deadline ?? null,
+    validationAction: deadlineValidation,
+    dependencies: [creationDateInput.value],
   });
 
   const formDataIsValid =
     titleInput.isValid &&
     descriptionInput.isValid &&
-    isCreationDateValid &&
-    isDeadlineValid;
+    creationDateInput.isValid &&
+    deadlineInput.isValid;
 
   const setInputsTouched = () => {
     titleInput.touch();
     descriptionInput.touch();
-    setDatesTouched();
-  };
-
-  const resetForm = () => {
-    titleInput.reset();
-    descriptionInput.reset();
-    resetDates();
+    creationDateInput.touch();
+    deadlineInput.touch();
   };
 
   return {
@@ -62,18 +61,17 @@ function useWallForm(selectedStickyNote: StickyNotesType | null) {
     titleErrorMsges: titleInput.errors,
     titleIsTouched: titleInput.isTouched,
     titleChangeHandler: titleInput.onChangeHandler,
-    creationDate,
-    isCreationDateTouched,
-    creationInputErrors,
-    creationDateChangeHandler,
-    deadline,
-    isDeadlineTouched,
-    deadlineInputErrors,
-    minDeadlineValue,
-    deadlineChangeHandler,
+    creationDate: creationDateInput.value,
+    isCreationDateTouched: creationDateInput.isTouched,
+    creationInputErrors: creationDateInput.errors,
+    creationDateChangeHandler: creationDateInput.onChangeHandler,
+    deadline: deadlineInput.value,
+    isDeadlineTouched: deadlineInput.isTouched,
+    deadlineInputErrors: deadlineInput.errors,
+    deadlineChangeHandler: deadlineInput.onChangeHandler,
+    minDeadlineValue: creationDateInput.value,
     formDataIsValid,
     setInputsTouched,
-    resetForm,
   };
 }
 

@@ -3,13 +3,8 @@ import { useState, useEffect } from "react";
 
 function useAddRedHighlightToUpcomingDeadline(deadline: Date) {
   const [deadlineStatus, setStatus] = useState<DeadlineStatus>(
-    DeadlineStatus.IS_NOT_NEAR
+    dateHelper.compareDeadlineDateWithNow(deadline)
   );
-
-  useEffect(() => {
-    const status = dateHelper.compareDeadlineDateWithNow(deadline);
-    setStatus(status);
-  }, [deadline]);
 
   useEffect(() => {
     const id = setInterval(() => {

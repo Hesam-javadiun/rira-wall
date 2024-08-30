@@ -1,0 +1,1 @@
+export {default } from './sticky-note-card'

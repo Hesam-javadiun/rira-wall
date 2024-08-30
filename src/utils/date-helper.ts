@@ -36,7 +36,7 @@ export default class DateHelper {
     const now = new Date().getTime();
     const diff = deadline.getTime() - now;
     const days = +(diff / (24 * 60 * 60 * 1000)).toFixed() + 1;
-    console.log('days',days);
+
     if (days >= 7) {
       return DeadlineStatus.IS_NOT_NEAR;
     }

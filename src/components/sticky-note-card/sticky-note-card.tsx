@@ -51,14 +51,6 @@ const StickyNoteCard = function ({
     }
   }
 
-  console.log(
-    "deadlineStatus",
-    deadlineStatus,
-    "deadline",
-    note.deadline.toDateString(),
-    dateHelper.compareDeadlineDateWithNow(note.deadline)
-  );
-
   const containerClassName = `${classes.cardContainer} ${cardColorClass} ${
     containerProps.className ?? ""
   }`;

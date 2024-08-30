@@ -6,7 +6,7 @@ import Button from "@/components/button";
 import useNotes from "@/hooks/use-notes";
 import { GridContainer, GridItem } from "@/components/gird";
 import { PlusIcon } from "@/components/icons";
-import StickyNoteCard from "./components/sticky-note-card/sticky-note-card";
+import StickyNoteCard from "./components/sticky-note-card";
 import { searchParamsUtils } from "./utils";
 import { type DragEvent } from "react";
 

@@ -16,7 +16,7 @@ type FormProps = ComponentPropsWithoutRef<"form"> & {
 
 const Form = function (props: FormProps) {
   const { addNote, editNote, onClose, listOfNotes, ...formProps } = props;
-  
+
   const { selectedStickyNote, onSubmit } = useSubmit(
     listOfNotes,
     addNote,
@@ -43,21 +43,20 @@ const Form = function (props: FormProps) {
     deadlineChangeHandler,
     formDataIsValid,
     setInputsTouched,
-    resetForm,
   } = useWallForm(selectedStickyNote);
 
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (
+      !descriptionIsTouched ||
+      !titleIsTouched ||
+      !isDeadlineTouched ||
+      !isCreationDateTouched
+    ) {
+      setInputsTouched();
+    }
     if (!formDataIsValid) {
-      if (
-        !descriptionIsTouched ||
-        !titleIsTouched ||
-        !isDeadlineTouched ||
-        !isCreationDateTouched
-      ) {
-        setInputsTouched();
-      }
       return;
     }
 
@@ -66,18 +65,10 @@ const Form = function (props: FormProps) {
     }
 
     onSubmit({ title, description, creationDate, deadline });
-    console.log("form submitted with data => ", {
-      title,
-      description,
-      creationDate,
-      deadline,
-    });
     onClose();
-    resetForm();
   };
 
   const cancelHandler = () => {
-    resetForm();
     onClose();
   };
 
@@ -87,7 +78,6 @@ const Form = function (props: FormProps) {
         id={"title"}
         label={"Title"}
         value={title}
-        // required
         errors={titleErrorMsges}
         onChange={titleChangeHandler}
         className={classes.input}
@@ -96,7 +86,6 @@ const Form = function (props: FormProps) {
       <Input
         id={"description"}
         type={"text"}
-        // required
         label={"Description"}
         value={description}
         errors={descriptionErrorMsges}
@@ -108,7 +97,6 @@ const Form = function (props: FormProps) {
         <Input
           id={"creation_date"}
           type={"date"}
-          // required
           label={"Date of registration"}
           value={dateHelper.convertDateToInputValue(creationDate)}
           errors={creationInputErrors}
@@ -119,7 +107,6 @@ const Form = function (props: FormProps) {
         <Input
           id={"deadline"}
           type={"date"}
-          // required
           label={"Deadline Date"}
           value={dateHelper.convertDateToInputValue(deadline)}
           errors={deadlineInputErrors}
