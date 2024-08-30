@@ -3,9 +3,6 @@ import { validation } from "@/utils";
 import useInput from "./useInput";
 import { useCallback } from "react";
 
-//TODO need to refactored
-// deadline date picker ye roz aghab pick mikone vali creation date dorost pick mikone ????
-
 function useWallForm(selectedStickyNote: StickyNotesType | null) {
   const titleInput = useInput({
     type: "text",
