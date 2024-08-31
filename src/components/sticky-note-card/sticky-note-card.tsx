@@ -50,7 +50,6 @@ const StickyNoteCard = function ({
       cardColorClass = "";
     }
   }
-
   const containerClassName = `${classes.cardContainer} ${cardColorClass} ${
     containerProps.className ?? ""
   }`;

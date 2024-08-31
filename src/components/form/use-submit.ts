@@ -20,10 +20,6 @@ function useSubmit(
     onSubmit = editNote.bind(null, slug as number)
   }
 
-  // const selectedStickyNote = useMemo<StickyNotesType | null>(() => {
-  //   return listOfNotes.find((_, index) => index === slug) ?? null;
-  // }, [slug, listOfNotes]);
-
   return { selectedStickyNote, onSubmit };
 }
 

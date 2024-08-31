@@ -1,10 +1,21 @@
 import { DeadlineStatus, dateHelper } from "@/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function useAddRedHighlightToUpcomingDeadline(deadline: Date) {
   const [deadlineStatus, setStatus] = useState<DeadlineStatus>(
     dateHelper.compareDeadlineDateWithNow(deadline)
   );
+
+  const firstUpdate = useRef(true);
+
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    setStatus(dateHelper.compareDeadlineDateWithNow(deadline));
+  }, [deadline]);
+  console.log("cardColorClass", deadlineStatus);
 
   useEffect(() => {
     const id = setInterval(() => {

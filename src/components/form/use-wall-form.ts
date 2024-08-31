@@ -24,8 +24,7 @@ function useWallForm(selectedStickyNote: StickyNotesType | null) {
 
   const deadlineValidation = useCallback(
     validation.isValidDeadline
-      .bind(validation)
-      .bind(null, creationDateInput.value),
+      .bind(validation, creationDateInput.value),
     [creationDateInput.value]
   );
 
